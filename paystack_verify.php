@@ -11,7 +11,7 @@ if($ref==""){
     header("Location: javascript://history.go(-1)");
 }
 
-$stmt = $conn->query("INSERT INTO `v3`(`parent_name`, `kid_name`, `parent_phone`, `address`, `reference`) VALUES ('$parent_name', '$kid_name', '$parent_phone', '$address', '$reference')");
+// $stmt = $conn->query("INSERT INTO `v3`(`parent_name`, `kid_name`, `parent_phone`, `address`, `reference`) VALUES ('$parent_name', '$kid_name', '$parent_phone', '$address', '$reference')");
 
 
   $curl = curl_init();
@@ -45,17 +45,19 @@ $stmt = $conn->query("INSERT INTO `v3`(`parent_name`, `kid_name`, `parent_phone`
     if($result->data->status=="success"){
         $satus = $result->data->status;
         $reference = $result->data->reference;
-        $parent_name = $result->data->customer->last_name;
-        $kid_name = $result->data->customer->first_name;
-        $fullname = $firstname." ".$lastname;
+        $parent_name = $result->data->metadata->custom_fields[0]->parent_name;
+        $parent_phone= $result->data->metadata->custom_fields[0]->parent_phone;
+        $kid_name = $result->data->metadata->custom_fields[0]->kid_name;
+        // $fullname = $firstname." ".$lastname;
         $parent_email = $result->data->customer->email;
         date_default_timezone_set("Africa/Lagos");
         $date_time = date('m/d/Y h:i:s a', time());
         $amount = ($result->data->amount)/100;
-        $address = "Katsina"; //Get the address from response(metadata);
+        $address =  $result->data->metadata->custom_fields[0]->address; //Get the address from response(metadata);
 
 
-        $stmt = $conn->query("UPDATE `v3` SET `email`='$parent_email', `amount`='$amount' WHERE `reference`='$reference')");
+    //     $stmt = $conn->query("UPDATE `v3` SET `email`='$parent_email', `amount`='$amount' WHERE `reference`='$reference')");
+    $stmt = $conn->query("INSERT INTO `v3`(`parent_name`, `kid_name`, `parent_phone`, `address`, `email`, `amount`, `reference`) VALUES ('$parent_name', '$kid_name', '$parent_phone', '$address', '$parent_email', '$amount', '$reference')");
 
         if($stmt){
          

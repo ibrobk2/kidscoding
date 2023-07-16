@@ -84,7 +84,7 @@ session_start();
       
       <div class="form-group">
         <label for="parentPhone">Parent's Phone Number</label>
-        <input type="tel" class="form-control" id="parentPhone" name="parentPhone"  required>
+        <input type="tel" class="form-control" id="parent_phone" name="parentPhone"  required>
       </div>
       
       <div class="form-group">
@@ -109,7 +109,7 @@ session_start();
   <script src="https://js.paystack.co/v1/inline.js"></script>
 <script>
   const paymentForm = document.getElementById('paymentForm');
-      //  var pname: document.getElementById("first-name").value
+   
         paymentForm.addEventListener("submit", payWithPaystack, false);
 
   function payWithPaystack(e){
@@ -118,20 +118,15 @@ session_start();
       key: 'pk_test_4ca55f702a3e739ed5f73b3a29407fa9f514aec7',
       email: document.getElementById("email").value,
       amount: 25000*100,
-      ref: 'BKR'+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+      ref: 'PSS-KC'+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
       metadata: {
          custom_fields: [
             {
                 parent_name: document.getElementById("parent_name").value,
+                parent_phone: document.getElementById("parent_phone").value,
                 kid_name: document.getElementById("kid_name").value,
                 address: document.getElementById("address").value
-                // parent_name: document.getElementById("parent_name").value,
-                // kid_name: document.getElementById("kid_name").value,
-                // address:  document.getElementById("address").value
-
-                // display_name: "Mobile Number",
-                // variable_name: "mobile_number",
-                // value: "+2348012345678"
+           
             }
          ]
       },

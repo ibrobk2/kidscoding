@@ -4,12 +4,15 @@
   <meta charset="UTF-8">
   <title>Payment Receipt - Kids Coding Camp</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Recursive:wght@300&display=swap" rel="stylesheet">
   <style>
     /* Custom Styles */
     body {
       background-color: #f8f9fa;
       color: #333;
-      font-family: Arial, sans-serif;
+      font-family: 'Recursive', sans-serif;
     }
     
     .container {
@@ -74,12 +77,26 @@
     </div>
     
     <div class="receipt-info">
-      <p><strong>Reference:</strong><?=$_GET['reference']; ?></p>
-      <p><strong>Parent's Name:</strong> John Doe</p>
-      <p><strong>Kid's Name:</strong> Jane Doe</p>
-      <p><strong>Parent's Phone Number:</strong> +1 123-456-7890</p>
-      <p><strong>Address:</strong> 123 Main Street, City, State</p>
-      <p><strong>Email Address:</strong> example@example.com</p>
+      <?php
+        include_once "includes/connection.php";
+
+        if(isset($_GET['reference'])){
+          $ref = $_GET['reference'];
+
+          $sql = "SELECT * FROM v3 WHERE reference='$ref'";
+          $result = mysqli_query($conn, $sql);
+
+          $data = mysqli_fetch_assoc($result);
+        }
+
+
+      ?>
+      <p><strong>Transaction Reference:</strong><?=$_GET['reference']; ?></p>
+      <p><strong>Parent's Name:</strong> <?=$data['parent_name']; ?></p>
+      <p><strong>Kid's Name:</strong> <?=$data['kid_name']; ?></p>
+      <p><strong>Parent's Phone Number:</strong> <?=$data['parent_phone']; ?></p>
+      <p><strong>Address:</strong> <?=$data['address']; ?></p>
+      <p><strong>Email Address:</strong> <?=$data['email']; ?></p>
     </div>
     
     <table class="receipt-table">
