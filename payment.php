@@ -73,7 +73,7 @@
   
   <div class="container">
     <h2>Registration Form</h2>
-    <form action="" method="POST" id="paymentForm">
+    <form action="paystack_verify.php" method="POST" id="paymentForm">
       <div class="form-group">
         <label for="parentName">Parent's Name</label>
         <!-- <input type="text" id="first-name" class="form-control"/> -->
