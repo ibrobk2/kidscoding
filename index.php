@@ -104,7 +104,7 @@
     <div class="container">
       <h1>Learn to Code in a Fun Way!</h1>
       <p>Join our coding camp and discover the exciting world of programming!</p>
-      <a href="payment.php" class="btn btn-register">Register Now</a>
+      <a href="payment3.php" class="btn btn-register">Register Now</a>
     </div>
   </div>
   
@@ -113,21 +113,21 @@
       <div class="row">
         <div class="col-md-4">
           <div class="feature-item">
-            <img src="coding1.jpg" alt="Kids Writing Code">
+            <img src="https://d1ng1bucl7w66k.cloudfront.net/ghost-blog/2023/02/Screen-Shot-2023-02-15-at-7.33.17-PM.png" alt="Kids Writing Code">
             <h3>Learn Coding</h3>
             <p>Develop problem-solving and logical thinking skills while learning to code.</p>
           </div>
         </div>
         <div class="col-md-4">
           <div class="feature-item">
-            <img src="coding2.jpg" alt="Kids Coding Workshop">
+            <img src="https://www.create-learn.us/_next/image?url=https%3A%2F%2Fcreate-learn-prod.s3.us-west-2.amazonaws.com%2Fuploads%2Fscratch%2Fthumbnail%2FC4db3Dt1gMWsVAy-3WAsgdgCuva9lqSwVDmvqYIIsU-scratch-ninja-introduction.jpg&w=640&q=75" alt="Kids Coding Workshop">
             <h3>Interactive Workshops</h3>
             <p>Participate in hands-on workshops and collaborate with fellow young coders.</p>
           </div>
         </div>
         <div class="col-md-4">
           <div class="feature-item">
-            <img src="coding3.jpg" alt="Kids Coding Projects">
+            <img src="https://th.bing.com/th/id/OIP.1U-qOYmo8WXjsoodev9wlAHaEK?w=333&h=187&c=7&r=0&o=5&dpr=1.1&pid=1.7" alt="Kids Coding Projects">
             <h3>Create Projects</h3>
             <p>Build your own projects and showcase your creativity and coding skills.</p>
           </div>

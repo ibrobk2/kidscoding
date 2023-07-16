@@ -1,3 +1,7 @@
+
+
+
+
 <?php
 session_start();
 ?>
@@ -65,17 +69,17 @@ session_start();
   
   <div class="container">
     <h2>Registration Form</h2>
-    <form action="paystack_verify.php" method="POST" id="paymentForm">
+    <form action="" method="POST" id="paymentForm">
       <div class="form-group">
         <label for="parentName">Parent's Name</label>
         <!-- <input type="text" id="first-name" class="form-control"/> -->
-        <input type="text" class="form-control" id="first-name" name="parent_name"  required>
+        <input type="text" class="form-control" id="parent_name" name="first-name"  required>
       </div>
       
       <div class="form-group">
         <label for="kidName">Kid's Name</label>
         <!-- <input type="text" id="last-name" class="form-control"/> -->
-        <input type="text" class="form-control" id="last-name" name="kid_name"  required>
+        <input type="text" class="form-control" id="kid_name" name="last-name"  required>
       </div>
       
       <div class="form-group">
@@ -103,48 +107,43 @@ session_start();
     <p>&copy; <script>const d=new Date(); document.write(d.getFullYear());</script> Proxy Software Systems. All rights reserved.</p>
   </footer>
   <script src="https://js.paystack.co/v1/inline.js"></script>
-  <script>
-       const paymentForm = document.getElementById('paymentForm');
+<script>
+  const paymentForm = document.getElementById('paymentForm');
       //  var pname: document.getElementById("first-name").value
         paymentForm.addEventListener("submit", payWithPaystack, false);
 
-        function payWithPaystack(e) {
-        e.preventDefault();
+  function payWithPaystack(e){
+    e.preventDefault();
+    var handler = PaystackPop.setup({
+      key: 'pk_test_4ca55f702a3e739ed5f73b3a29407fa9f514aec7',
+      email: document.getElementById("email").value,
+      amount: 25000*100,
+      ref: 'BKR'+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+      metadata: {
+         custom_fields: [
+            {
+                parent_name: document.getElementById("parent_name").value,
+                kid_name: document.getElementById("kid_name").value,
+                address: document.getElementById("address").value
+                // parent_name: document.getElementById("parent_name").value,
+                // kid_name: document.getElementById("kid_name").value,
+                // address:  document.getElementById("address").value
 
-        let handler = PaystackPop.setup({
-            key: 'pk_test_4ca55f702a3e739ed5f73b3a29407fa9f514aec7', // Replace with your public key
-            
-            email: document.getElementById("email").value,
-            amount: 25000*100,
-           
-            ref: 'PSS-KC'+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-            // label: "Optional string that replaces customer email"
-            metadata: {
-            custom_fields: [
-                {
-                  parent_name: document.getElementById('parent_name').value,
-                  kid_name: document.getElementById('kid_name').value,
-                  phone: document.getElementById("parentPhone").value,
-                }
-              ]
-            },
-       
-            onClose: function(){
-                window.location="./index.php";
-            alert('Transaction Cancelled.');
-            },
-                callback: function(response){
-             // let kid_name: document.getElementById("last-name").value
-            // let address: document.getElementById("address").value
-            let message = 'Payment complete! Reference: ' + response.reference;
-            alert(message);
-            window.location="paystack_verify.php?reference="+response.reference;
+                // display_name: "Mobile Number",
+                // variable_name: "mobile_number",
+                // value: "+2348012345678"
             }
-        });
-
-        handler.openIframe();
-        }
-
-    </script>
-</body>
-</html>
+         ]
+      },
+      callback: function(response){
+          alert('success. transaction ref is ' + response.reference);
+          window.location="paystack_verify.php?reference="+response.reference;
+      },
+      onClose: function(){
+          window.location="./index.php";
+          alert('window closed');
+      }
+    });
+    handler.openIframe();
+  }
+</script>
