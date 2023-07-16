@@ -74,6 +74,7 @@
     </div>
     
     <div class="receipt-info">
+      <p><strong>Reference:</strong><?=$_GET['reference']; ?></p>
       <p><strong>Parent's Name:</strong> John Doe</p>
       <p><strong>Kid's Name:</strong> Jane Doe</p>
       <p><strong>Parent's Phone Number:</strong> +1 123-456-7890</p>

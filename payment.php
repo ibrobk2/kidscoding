@@ -1,13 +1,5 @@
 <?php
-// if($_SERVER['REQUEST_METHOD']==="POST"){
-//   //variables Declarations
-//   $parent_name = $_POST['parentName'];
-//   $kid_name = $_POST['kidName'];
-//   $parent_phone = $_POST['parentPhone'];
-//   $address = $_POST['address'];
-//   $parent_email = $_POST['email'];
-// }
-
+session_start();
 ?>
 <!DOCTYPE html>
 <html>
@@ -88,12 +80,12 @@
       
       <div class="form-group">
         <label for="parentPhone">Parent's Phone Number</label>
-        <input type="tel" class="form-control" id="parentPhone" name="parentPhone"   required>
+        <input type="tel" class="form-control" id="parentPhone" name="parentPhone"  required>
       </div>
       
       <div class="form-group">
         <label for="address">Address</label>
-        <input type="text" class="form-control" id="address" name="address"   required>
+        <input type="text" class="form-control" id="address" name="address"  required>
       </div>
       
       <div class="form-group">
@@ -103,7 +95,7 @@
       
       <!-- Add any other relevant fields here -->
       <input type="hidden" name="amount" value="25000">
-      <button type="submit" class="btn btn-register"  onclick="payWithPaystack()">Proceed to Payment</button>
+      <button type="submit" name="btn_reg" class="btn btn-register"  onclick="payWithPaystack()">Proceed to Payment</button>
     </form>
   </div>
   
@@ -113,6 +105,7 @@
   <script src="https://js.paystack.co/v1/inline.js"></script>
   <script>
        const paymentForm = document.getElementById('paymentForm');
+      //  var pname: document.getElementById("first-name").value
         paymentForm.addEventListener("submit", payWithPaystack, false);
 
         function payWithPaystack(e) {
@@ -120,12 +113,11 @@
 
         let handler = PaystackPop.setup({
             key: 'pk_test_4ca55f702a3e739ed5f73b3a29407fa9f514aec7', // Replace with your public key
+            first_name: document.getElementById('first-name').value,
+            last_name: document.getElementById('last-name').value,
             email: document.getElementById("email").value,
             amount: 25000*100,
             phone: document.getElementById("parentPhone").value,
-            first_name: document.getElementById("first-name").value,
-            last_name: document.getElementById("last-name").value,
-            address: document.getElementById("address").value,
             ref: 'PSS-KC'+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
             // label: "Optional string that replaces customer email"
             onClose: function(){
@@ -133,9 +125,11 @@
             alert('Transaction Cancelled.');
             },
             callback: function(response){
+             // let kid_name: document.getElementById("last-name").value
+            // let address: document.getElementById("address").value
             let message = 'Payment complete! Reference: ' + response.reference;
             alert(message);
-            window.location="paystack_verify.php?reference="+response.reference+"&phone="+this.amount;
+            window.location="paystack_verify.php?reference="+response.reference;
             }
         });
 
