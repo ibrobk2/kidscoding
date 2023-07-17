@@ -1,3 +1,7 @@
+
+
+
+
 <?php
 session_start();
 ?>
@@ -65,22 +69,22 @@ session_start();
   
   <div class="container">
     <h2>Registration Form</h2>
-    <form action="paystack_verify.php" method="POST" id="paymentForm">
+    <form action="" method="POST" id="paymentForm">
       <div class="form-group">
         <label for="parentName">Parent's Name</label>
         <!-- <input type="text" id="first-name" class="form-control"/> -->
-        <input type="text" class="form-control" id="first-name" name="parent_name"  required>
+        <input type="text" class="form-control" id="parent_name" name="first-name"  required>
       </div>
       
       <div class="form-group">
         <label for="kidName">Kid's Name</label>
         <!-- <input type="text" id="last-name" class="form-control"/> -->
-        <input type="text" class="form-control" id="last-name" name="kid_name"  required>
+        <input type="text" class="form-control" id="kid_name" name="last-name"  required>
       </div>
       
       <div class="form-group">
         <label for="parentPhone">Parent's Phone Number</label>
-        <input type="tel" class="form-control" id="parentPhone" name="parentPhone"  required>
+        <input type="tel" class="form-control" id="parent_phone" name="parentPhone"  required>
       </div>
       
       <div class="form-group">
@@ -92,9 +96,13 @@ session_start();
         <label for="email">Email Address</label>
         <input type="email" class="form-control" id="email" name="email"   required>
       </div>
+      <div class="form-group">
+        <label for="amount">Registration Fee</label>
+        <input type="text" class="form-control" id="amount" name="amount" value="&#8358;<?= number_format(25000); ?>" readonly  required>
+      </div>
       
       <!-- Add any other relevant fields here -->
-      <input type="hidden" name="amount" value="25000">
+      <!-- <input type="hidden" name="amount" value="25000"> -->
       <button type="submit" name="btn_reg" class="btn btn-register"  onclick="payWithPaystack()">Proceed to Payment</button>
     </form>
   </div>
@@ -103,48 +111,38 @@ session_start();
     <p>&copy; <script>const d=new Date(); document.write(d.getFullYear());</script> Proxy Software Systems. All rights reserved.</p>
   </footer>
   <script src="https://js.paystack.co/v1/inline.js"></script>
-  <script>
-       const paymentForm = document.getElementById('paymentForm');
-      //  var pname: document.getElementById("first-name").value
+<script>
+  const paymentForm = document.getElementById('paymentForm');
+   
         paymentForm.addEventListener("submit", payWithPaystack, false);
 
-        function payWithPaystack(e) {
-        e.preventDefault();
-
-        let handler = PaystackPop.setup({
-            key: 'pk_test_4ca55f702a3e739ed5f73b3a29407fa9f514aec7', // Replace with your public key
-            
-            email: document.getElementById("email").value,
-            amount: 25000*100,
+  function payWithPaystack(e){
+    e.preventDefault();
+    var handler = PaystackPop.setup({
+      key: 'pk_test_4ca55f702a3e739ed5f73b3a29407fa9f514aec7',
+      email: document.getElementById("email").value,
+      amount: 25000*100,
+      ref: 'PSS-KC'+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+      metadata: {
+         custom_fields: [
+            {
+                parent_name: document.getElementById("parent_name").value,
+                parent_phone: document.getElementById("parent_phone").value,
+                kid_name: document.getElementById("kid_name").value,
+                address: document.getElementById("address").value
            
-            ref: 'PSS-KC'+Math.floor((Math.random() * 1000000000) + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
-            // label: "Optional string that replaces customer email"
-            metadata: {
-            custom_fields: [
-                {
-                  parent_name: document.getElementById('parent_name').value,
-                  kid_name: document.getElementById('kid_name').value,
-                  phone: document.getElementById("parentPhone").value,
-                }
-              ]
-            },
-       
-            onClose: function(){
-                window.location="./index.php";
-            alert('Transaction Cancelled.');
-            },
-                callback: function(response){
-             // let kid_name: document.getElementById("last-name").value
-            // let address: document.getElementById("address").value
-            let message = 'Payment complete! Reference: ' + response.reference;
-            alert(message);
-            window.location="paystack_verify.php?reference="+response.reference;
             }
-        });
-
-        handler.openIframe();
-        }
-
-    </script>
-</body>
-</html>
+         ]
+      },
+      callback: function(response){
+          alert('success. transaction ref is ' + response.reference);
+          window.location="paystack_verify.php?reference="+response.reference;
+      },
+      onClose: function(){
+          window.location="./index.php";
+          alert('window closed');
+      }
+    });
+    handler.openIframe();
+  }
+</script>

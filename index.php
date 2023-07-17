@@ -104,7 +104,7 @@
     <div class="container">
       <h1>Learn to Code in a Fun Way!</h1>
       <p>Join our coding camp and discover the exciting world of programming!</p>
-      <a href="payment3.php" class="btn btn-register">Register Now</a>
+      <a href="payment.php" class="btn btn-register">Register Now</a>
     </div>
   </div>
   
